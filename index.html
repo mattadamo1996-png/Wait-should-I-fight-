@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Fight Odds Calculator</title>
+<style>
+body {
+    font-family: Arial;
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+}
+h1 { text-align: center; }
+.question { margin-bottom: 15px; }
+button {
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+}
+.result {
+    margin-top: 30px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🥊 Can You Beat a Random Person in a Fight?</h1>
+
+<div class="question">
+Sex:
+<select id="sex">
+  <option value="10">Male</option>
+  <option value="0">Female</option>
+</select>
+</div>
+
+<div class="question">
+Height:
+<select id="height">
+  <option value="0">Under 170cm</option>
+  <option value="5">170–185cm</option>
+  <option value="10">Over 185cm</option>
+</select>
+</div>
+
+<div class="question">
+Weight:
+<select id="weight">
+  <option value="0">Under 70kg</option>
+  <option value="5">70–90kg</option>
+  <option value="10">Over 90kg</option>
+</select>
+</div>
+
+<div class="question">
+Gym regularly?
+<select id="gym">
+  <option value="0">No</option>
+  <option value="10">Yes</option>
+</select>
+</div>
+
+<div class="question">
+Boxing or MMA training?
+<select id="train">
+  <option value="0">No</option>
+  <option value="25">Yes</option>
+</select>
+</div>
+
+<div class="question">
+Ever been in a real fight?
+<select id="fight">
+  <option value="0">No</option>
+  <option value="10">Yes</option>
+</select>
+</div>
+
+<div class="question">
+Smoker?
+<select id="smoke">
+  <option value="-10">Yes</option>
+  <option value="0">No</option>
+</select>
+</div>
+
+<div class="question">
+Age:
+<select id="age">
+  <option value="-20">Under 18</option>
+  <option value="5">18–30</option>
+  <option value="0">30–50</option>
+  <option value="-10">Over 50</option>
+</select>
+</div>
+
+<button onclick="calculate()">Calculate my odds</button>
+
+<div class="result" id="result"></div>
+
+<p style="text-align:center; margin-top:20px;">
+<a href="https://buymeacoffee.com/YOURNAME" target="_blank">☕ Buy me a coffee</a>
+</p>
+
+<script>
+function calculate() {
+    let score =
+        Number(sex.value) +
+        Number(height.value) +
+        Number(weight.value) +
+        Number(gym.value) +
+        Number(train.value) +
+        Number(fight.value) +
+        Number(smoke.value) +
+        Number(age.value);
+
+    let opponents = [
+        {name:"Average adult", score:40},
+        {name:"Gym guy", score:55},
+        {name:"Amateur boxer", score:75},
+        {name:"Rugby player", score:85},
+        {name:"Random drunk", score:30},
+        {name:"Skinny teenager", score:25},
+        {name:"Big tradie", score:65}
+    ];
+
+    let opponent = opponents[Math.floor(Math.random()*opponents.length)];
+
+    let chance = 1 / (1 + Math.exp((opponent.score - score)/10));
+    let percent = Math.round(chance * 100);
+
+    let message = "";
+    if (percent < 30) message = "You would almost certainly lose 😬";
+    else if (percent < 60) message = "It would be close 🤼";
+    else message = "You might actually win 💪";
+
+    result.innerHTML =
+        "You vs: <b>" + opponent.name + "</b><br>" +
+        "Your chance of winning: <b>" + percent + "%</b><br><br>" +
+        message;
+}
+</script>
+
+</body>
+</html>
